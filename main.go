@@ -1,34 +1,32 @@
 package main
 
 import (
-	"ascii/ascii"
 	"fmt"
 	"os"
+	"strings"
+
+	"ascii/ascii"
 )
 
 func main() {
-	args := os.Args[1:]
-	if len(args) < 1 {
-		fmt.Println("Usage: go run main.go <input_string> [style]")
+	if len(os.Args) < 2{
+		fmt.Println("Usage: go run main.go <input_string>")
 		return
 	}
 
-	input := args[0]
-	style := "standard.txt" // Default style
-	if len(args) > 1 {
-		style = args[1]
-	}
-
-	if input == "" {
-		fmt.Println("Error: Input string cannot be empty.")
+	str := strings.Join(os.Args[1:], " ")
+	if str == "" {
+		fmt.Println("Error: Empty string")
 		return
 	}
 
-	asciiArt, err := ascii.GenerateASCII(input, style)
-	if err != nil {
-		fmt.Printf("Error generating ASCII art: %v\n", err)
-		return
+	// Write text line by line into result
+	for i := 0; i < 8; i++ {
+		result := ""
+		for _, letter := range str {
+			result += ascii.GetLine(letter, "standard.txt")
+		}
+		fmt.Println(result)
+		result = ""
 	}
-
-	fmt.Println(asciiArt)
 }
