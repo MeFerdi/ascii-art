@@ -1,26 +1,45 @@
 package ascii
 
 import (
-	"bufio"
 	"fmt"
-	"os"
+	"io/ioutil"
 	"strings"
 )
 
-func GetLine(num int) string {
-	str := ""
-	f, e := os.Open("standard.txt")
-	if e != nil {
-		fmt.Println(e.Error())
-		os.Exit(0)
+// ReadStyleFromFile reads ASCII art style from a file
+func ReadStyleFromFile(filename string) (string, error) {
+	content, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return "", err
 	}
-	defer f.Close()
+	return string(content), nil
+}
 
-	f.Seek(0, 0)
-	content := bufio.NewReader(f)
-	for i := 0; i < num; i++ {
-		str, _ = content.ReadString('\n')
+// GenerateASCII converts a string to ASCII art using the provided style
+func GenerateASCII(input string, style string) (string, error) {
+	if input == "" {
+		return "", fmt.Errorf("input string cannot be empty")
 	}
-	str = strings.TrimSuffix(str, "\n")
-	return str
+
+	artStyle, err := ReadStyleFromFile(style)
+	if err != nil {
+		return "", err
+	}
+
+	lines := strings.Split(artStyle, "\n")
+	asciiArt := ""
+	for _, char := range input {
+		if char >= 32 && char <= 126 {
+			index := int(char) - 32
+			if index >= 0 && index < len(lines) {
+				asciiArt += lines[index] + "\n"
+			} else {
+				asciiArt += "?" + "\n" // Placeholder for undefined characters
+			}
+		} else {
+			asciiArt += "?" + "\n" // Placeholder for non-printable characters
+		}
+	}
+
+	return asciiArt, nil
 }

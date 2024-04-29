@@ -1,7 +1,13 @@
 package ascii
 
-import "unicode"
+import "strings"
 
-func IsASCII(r rune) bool {
-	return r <= unicode.MaxASCII && unicode.IsGraphic(r)
+// HandleNonASCII handles non-ASCII characters in the input string
+func HandleNonASCII(input string) string {
+	return strings.Map(func(r rune) rune {
+		if r > 127 {
+			return '?'
+		}
+		return r
+	}, input)
 }

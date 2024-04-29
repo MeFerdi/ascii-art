@@ -1,65 +1,34 @@
 package main
 
 import (
+	"ascii/ascii"
 	"fmt"
 	"os"
-	"strings"
-
-	"ascii/ascii"
 )
 
 func main() {
-	if len(os.Args) < 2 {
+	args := os.Args[1:]
+	if len(args) < 1 {
+		fmt.Println("Usage: go run main.go <input_string> [style]")
 		return
 	}
-	if len(os.Args) == 1 || strings.TrimSpace(os.Args[1]) == "" {
+
+	input := args[0]
+	style := "standard.txt" // Default style
+	if len(args) > 1 {
+		style = args[1]
+	}
+
+	if input == "" {
+		fmt.Println("Error: Input string cannot be empty.")
 		return
 	}
 
-	// Writing arguments in a single string
-	str := os.Args[1]
-	for _, v := range os.Args[2:] {
-		str += " " + v
+	asciiArt, err := ascii.GenerateASCII(input, style)
+	if err != nil {
+		fmt.Printf("Error generating ASCII art: %v\n", err)
+		return
 	}
 
-	// 2. Checking weather str contain "\n" or not ---> executing the ascii-art
-	prev := 'a'
-	severallines := false
-	for _, v := range str {
-		if v == 'n' && prev == '\\' {
-			severallines = true
-		}
-		prev = v
-	}
-
-	// 3. Writing text line by line into result
-	result := ""
-	if severallines {
-		args := strings.Split(str, "\\n")
-		for _, word := range args {
-			for i := 0; i < 8; i++ {
-				for _, letter := range word {
-					if ascii.IsASCII(letter) {
-						result += ascii.GetLine(1 + int(letter-' ')*9 + i)
-					} else {
-						fmt.Printf("Non-ASCII character: %c\n", letter)
-					}
-				}
-				fmt.Println(result)
-				result = ""
-			}
-		}
-	} else {
-		for i := 0; i < 8; i++ {
-			for _, letter := range str {
-				if ascii.IsASCII(letter) {
-					result += ascii.GetLine(1 + int(letter-' ')*9 + i)
-				} else {
-					fmt.Printf("Error: Non-ASCII character")
-				}
-			}
-			fmt.Println(result)
-			result = ""
-		}
-	}
+	fmt.Println(asciiArt)
 }
