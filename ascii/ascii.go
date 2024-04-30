@@ -10,6 +10,7 @@ import (
 var bannerMap map[string]string
 
 func init() {
+
 	bannerMap = make(map[string]string)
 	loadBanner("shadow.txt")
 	loadBanner("standard.txt")
@@ -38,21 +39,41 @@ func loadBanner(filename string) {
 }
 
 // GetLine retrieves the ASCII art representation for a given character from the specified banner file
-func GetLine(char rune, bannerFile string) string {
+func GetLetterArray(char rune, bannerFile string) []string {
 	banner, ok := bannerMap[bannerFile]
 	if !ok {
-		return ""
+		return []string{}
+	}
+	alphabet := strings.Split(banner, "\n")
+
+	start := (char - 32) * 9
+	arr := alphabet[start : start+9]
+	return arr
+}
+
+func PrintAscii(str string) {
+	lines := strings.Split(str, "\n")
+
+	letters := [][]string{}
+	for _, line := range lines {
+
+		for _, letter := range line {
+			// if letter == '\n' {
+			// 	fmt.Println() // Print a newline if a newline character is encountered
+			arr := GetLetterArray(letter, "standard.txt")
+			letters = append(letters, arr)
+			if letter == '\n' {
+				fmt.Println()
+			}
+		}
 	}
 
-	asciiArt := ""
-	for _, line := range strings.Split(banner, "\n") {
-		if len(line) == 0 {
-			continue
+	for i := 1; i < 9; i++ {
+		for _, letter := range letters {
+			fmt.Printf("%s", letter[i])
 		}
-		if line[0] == byte(char) {
-			asciiArt = line[1:]
-			break
+		if i < 8 {
+			fmt.Println()
 		}
 	}
-	return asciiArt
 }

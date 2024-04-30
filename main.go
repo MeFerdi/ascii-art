@@ -5,11 +5,11 @@ import (
 	"os"
 	"strings"
 
-	"ascii/ascii"
+	"ascii/ascii" // Import the ascii package from the local directory
 )
 
 func main() {
-	if len(os.Args) < 2{
+	if len(os.Args) == 1 {
 		fmt.Println("Usage: go run main.go <input_string>")
 		return
 	}
@@ -19,14 +19,19 @@ func main() {
 		fmt.Println("Error: Empty string")
 		return
 	}
+	// if strings.Contains(str, "\n") {
+	// 	// fmt.Println("Error: Input string contains a newline character")
+	// 	return
+	// }
+	// Split the input string by newline characters
+	str = strings.ReplaceAll(str, "\n", "\\n")
+	// str = strings.ReplaceAll(str, "\n", "\n")
+	lines := strings.Split(str, "\\n")
 
-	// Write text line by line into result
-	for i := 0; i < 8; i++ {
-		result := ""
-		for _, letter := range str {
-			result += ascii.GetLine(letter, "standard.txt")
-		}
-		fmt.Println(result)
-		result = ""
+	for _, line := range lines {
+		
+
+		ascii.PrintAscii(line) // Call the PrintAscii function from the ascii package to print ASCII art
+		fmt.Println()
 	}
 }
