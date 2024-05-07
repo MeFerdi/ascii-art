@@ -63,7 +63,7 @@ func PrintAscii(str string) {
 			arr := GetLetterArray(letter, "standard.txt")
 			letters = append(letters, arr)
 			if letter == '\n' {
-				fmt.Println()
+				fmt.Print()
 			}
 		}
 	}
