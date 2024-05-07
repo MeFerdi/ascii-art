@@ -19,19 +19,21 @@ func main() {
 		fmt.Println("Error: Empty string")
 		return
 	}
-	// if strings.Contains(str, "\n") {
-	// 	// fmt.Println("Error: Input string contains a newline character")
-	// 	return
-	// }
+	if strings.Contains(str, "\n") {
+		fmt.Println("Error: Input string contains a newline character")
+		return
+	}
 	// Split the input string by newline characters
 	str = strings.ReplaceAll(str, "\n", "\\n")
-	// str = strings.ReplaceAll(str, "\n", "\n")
+	//  str = strings.ReplaceAll(s"tr, "\n", "\n")
 	lines := strings.Split(str, "\\n")
 
 	for _, line := range lines {
-		
-
-		ascii.PrintAscii(line) // Call the PrintAscii function from the ascii package to print ASCII art
-		fmt.Println()
+		if line == "" {
+			fmt.Println()
+		} else {
+			ascii.PrintAscii(line) // Call the PrintAscii function from the ascii package to print ASCII art
+			fmt.Println()
+		}
 	}
 }
