@@ -15,8 +15,8 @@ func init() {
 	loadBanner("shadow.txt")
 	loadBanner("standard.txt")
 	loadBanner("thinkertoy.txt")
+	// }
 }
-
 func loadBanner(filename string) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -58,8 +58,13 @@ func PrintAscii(str string) {
 	for _, line := range lines {
 
 		for _, letter := range line {
-			// if letter == '\n' {
-			// 	fmt.Println() // Print a newline if a newline character is encountered
+			if letter < 32 || letter > 126 {
+				fmt.Print("Non ascii")
+				return
+				{
+
+				}
+			}
 			arr := GetLetterArray(letter, "standard.txt")
 			letters = append(letters, arr)
 			if letter == '\n' {

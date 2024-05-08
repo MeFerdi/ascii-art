@@ -25,11 +25,10 @@ func main() {
 	// }
 	// Split the input string by newline characters
 	str = strings.ReplaceAll(str, "\n", "\\n")
-	// str = strings.ReplaceAll(str, "\n", "\n")
+	
 	lines := strings.Split(str, "\\n")
 
 	for _, line := range lines {
-		
 
 		ascii.PrintAscii(line) // Call the PrintAscii function from the ascii package to print ASCII art
 		fmt.Println()
