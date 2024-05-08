@@ -7,16 +7,18 @@ import (
 	"strings"
 )
 
+// bannerMap is a map that stores the ASCII art for different banner files
 var bannerMap map[string]string
 
+// init initializes the bannerMap and loads the ASCII art from the banner files
 func init() {
-
 	bannerMap = make(map[string]string)
 	loadBanner("shadow.txt")
 	loadBanner("standard.txt")
 	loadBanner("thinkertoy.txt")
-	// }
 }
+
+// loadBanner reads the contents of a banner file and stores it in the bannerMap
 func loadBanner(filename string) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -38,7 +40,7 @@ func loadBanner(filename string) {
 	bannerMap[filename] = strings.Join(lines, "\n")
 }
 
-// GetLine retrieves the ASCII art representation for a given character from the specified banner file
+// GetLetterArray retrieves the ASCII art representation for a given character from the specified banner file
 func GetLetterArray(char rune, bannerFile string) []string {
 	banner, ok := bannerMap[bannerFile]
 	if !ok {
@@ -51,19 +53,17 @@ func GetLetterArray(char rune, bannerFile string) []string {
 	return arr
 }
 
+// PrintAscii prints the ASCII art representation of a given string
 func PrintAscii(str string) {
 	lines := strings.Split(str, "\n")
 
 	letters := [][]string{}
 	for _, line := range lines {
-
+		// Handle non-ASCII characters
 		for _, letter := range line {
 			if letter < 32 || letter > 126 {
 				fmt.Print("Non ascii")
 				return
-				{
-
-				}
 			}
 			arr := GetLetterArray(letter, "standard.txt")
 			letters = append(letters, arr)
@@ -73,6 +73,7 @@ func PrintAscii(str string) {
 		}
 	}
 
+	// Print the ASCII art vertically
 	for i := 1; i < 9; i++ {
 		for _, letter := range letters {
 			fmt.Printf("%s", letter[i])
