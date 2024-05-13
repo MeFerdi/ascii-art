@@ -38,10 +38,8 @@ func main() {
 	}
 	if strings.Contains(str, "\\t") {
 		str = strings.ReplaceAll(str, "\\t", "    ")
-
-		
 	}
-	//Handling backspace tabs
+	// Handling backspace tabs
 	str = strings.ReplaceAll(str, "\\b", "\b")
 
 	for {
@@ -65,6 +63,10 @@ func main() {
 		if line == "" {
 			fmt.Println()
 		} else {
+			// if len(line) != 11 {
+			// 	fmt.Println("Error: File content modified")
+			// 	return
+			// }
 
 			ascii.PrintAscii(line) // Call the PrintAscii function from the ascii package to print ASCII art
 			fmt.Println()

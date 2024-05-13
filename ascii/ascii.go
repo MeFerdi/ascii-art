@@ -29,8 +29,13 @@ func loadBanner(filename string) {
 
 	scanner := bufio.NewScanner(file)
 	var lines []string
+
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
+	}
+	if len(lines) == 0 {
+		// fmt.Println("Error: File content deleted")
+		return
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Printf("Error reading file %s: %v\n", filename, err)
@@ -72,10 +77,18 @@ func PrintAscii(str string) {
 			}
 		}
 	}
+	if len(letters) == 0 {
+		fmt.Println("Error: No ASCII art to print")
+		return
+	}
 
 	// Print the ASCII art vertically
 	for i := 1; i < 9; i++ {
 		for _, letter := range letters {
+			if len(letter) < i {
+				fmt.Print("Error: File content Modified")
+				return
+			}
 			fmt.Printf("%s", letter[i])
 		}
 		if i < 8 {
