@@ -47,13 +47,13 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd ascii-art
 ```
 
 Run the project
 
 ```bash
-  go run main.go <yourtext.txt or a text without an extension>
+  go run main.go <yourtext>
 ```
 
 ## Running Tests
@@ -61,5 +61,9 @@ Run the project
 To run tests, run the following command
 
 ```bash
-  go run test
+  cd ascii
+```
+
+```bash
+  go test
 ```

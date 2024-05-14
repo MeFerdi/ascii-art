@@ -77,11 +77,6 @@ func PrintAscii(str string) {
 			}
 		}
 	}
-	if len(letters) == 0 {
-		fmt.Println("Error: No ASCII art to print")
-		return
-	}
-
 	// Print the ASCII art vertically
 	for i := 1; i < 9; i++ {
 		for _, letter := range letters {
