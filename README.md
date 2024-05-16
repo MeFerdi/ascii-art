@@ -67,3 +67,4 @@ To run tests, run the following command
 ```bash
   go test
 ```
+NOTE: The banner files are also added in ascii dir to enable successful test in loadbanner.
