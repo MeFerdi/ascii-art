@@ -52,7 +52,10 @@ func GetLetterArray(char rune, bannerStyle string) []string {
 		return []string{}
 	}
 	alphabet := strings.Split(banner, "\n")
-	start := (char - 32) * 9
+	start := (int(char) - 32) * 9
+	if start < 0 || start >= len(alphabet) {
+		return []string{}
+	}
 	arr := alphabet[start : start+9]
 	return arr
 }

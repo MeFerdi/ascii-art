@@ -22,52 +22,35 @@ func TestLoadBanner(t *testing.T) {
 	// Add more test cases for loading other banner files or error scenarios
 }
 
-// func TestGetLetterArray(t *testing.T) {
-// 	// Test getting the ASCII representation for a valid character
-// 	expected := []string{
-// 		"  _   _ ",
-// 		" | | | |",
-// 		" | |_| |",
-// 		" |  _  |",
-// 		" |_| |_|",
-// 	}
-// 	result := GetLetterArray('H', "standard.txt")
-// 	if !equalSlices(expected, result) {
-// 		t.Errorf("Expected %v, got %v", expected, result)
-// 	}
+func TestPrintAscii(t *testing.T) {
+	tests := []struct {
+		name        string
+		input       string
+		bannerStyle string
+	}{
+		{"Standard banner", "Hello", "standard.txt"},
+		{"Shadow banner", "World", "shadow.txt"},
+		{"Non-ASCII character", "Hello\x00", "standard.txt"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Capture the output of PrintAscii
+			// ...
+		})
+	}
+}
 
-// 	// Add more test cases for different characters and banner files
-// }
+// Helper function to compare string slices
+func equalSlices(a, b []string) bool {
+	if len(a) != len(b) {
+		return false
+	}
 
-// func TestPrintAscii(t *testing.T) {
-// 	// Test printing ASCII art for a valid string
-// 	expected := []string{
-// 		"  _   _ ",
-// 		" | | | |",
-// 		" | |_| |",
-// 		" |  _  |",
-// 		" |_| |_|",
-// 	}
+	for i := range a {
+		if i >= len(b) || a[i] != b[i] {
+			return false
+		}
+	}
 
-// 	result := GetLetterArray('H', "standard.txt")
-// 	if !equalSlices(expected, result) {
-// 		t.Errorf("Expected %v, got %v", expected, result)
-// 	}
-
-// 	// Add more test cases for handling non-ASCII characters, empty input, modified file content, etc.
-// }
-
-// // Helper function to compare string slices
-// func equalSlices(a, b []string) bool {
-// 	if len(a) != len(b) {
-// 		return false
-// 	}
-
-// 	for i := range a {
-// 		if i >= len(b) || a[i] != b[i] {
-// 			return false
-// 		}
-// 	}
-
-// 	return true
-// }
+	return true
+}
