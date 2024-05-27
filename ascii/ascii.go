@@ -46,34 +46,31 @@ func loadBanner(filename string) {
 }
 
 // GetLetterArray retrieves the ASCII art representation for a given character from the specified banner file
-func GetLetterArray(char rune, bannerFile string) []string {
-	banner, ok := bannerMap[bannerFile]
+func GetLetterArray(char rune, bannerStyle string) []string {
+	banner, ok := bannerMap[bannerStyle]
 	if !ok {
 		return []string{}
 	}
 	alphabet := strings.Split(banner, "\n")
-
 	start := (char - 32) * 9
 	arr := alphabet[start : start+9]
 	return arr
 }
 
 // PrintAscii prints the ASCII art representation of a given string
-func PrintAscii(str string) {
+func PrintAscii(str, bannerStyle string) {
 	lines := strings.Split(str, "\n")
-
 	letters := [][]string{}
 	for _, line := range lines {
-		// Handle non-ASCII characters
 		for _, letter := range line {
 			if letter < 32 || letter > 126 {
-				fmt.Print("Non ascii")
+				fmt.Printf("Non-ASCII character '%c' encountered\n", letter)
 				return
 			}
-			arr := GetLetterArray(letter, "standard.txt")
+			arr := GetLetterArray(letter, bannerStyle)
 			letters = append(letters, arr)
 			if letter == '\n' {
-				fmt.Print()
+				fmt.Println()
 			}
 		}
 	}
@@ -81,7 +78,7 @@ func PrintAscii(str string) {
 	for i := 1; i < 9; i++ {
 		for _, letter := range letters {
 			if len(letter) < i {
-				fmt.Print("Error: File content Modified")
+				fmt.Println("Error: File content modified")
 				return
 			}
 			fmt.Printf("%s", letter[i])

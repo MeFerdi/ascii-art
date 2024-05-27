@@ -5,70 +5,41 @@ import (
 	"os"
 	"strings"
 
-	"ascii/ascii" // Import the ascii package from the local directory
+	ascii "ascii/ascii" // Import the ascii package from the local directory
 )
 
 func main() {
-	if len(os.Args) == 1 {
-		fmt.Println("Usage: go run main.go <input_string>")
+	if len(os.Args) < 2 || len(os.Args) > 3 {
+		fmt.Println("Usage: go run main.go <input_string> [banner_style]")
+		return
+	}
+	str := os.Args[1]
+	bannerStyle := "standard.txt" // Default banner style
+	if len(os.Args) == 3 {
+		bannerStyle = os.Args[2]
+	}
+
+	modifiedStr, hasError := ascii.SpecialCharacters(str)
+	if hasError {
+		fmt.Println(modifiedStr)
 		return
 	}
 
-	str := strings.Join(os.Args[1:], " ")
-	if str == "" {
-		fmt.Println("Error: Empty string")
-		return
-	}
-	// if conditions for special tabs
-	if strings.Contains(str, "\\a") {
-		fmt.Println("Error: Bell Character")
-		return
-	}
-	if strings.Contains(str, "\\v") {
-		fmt.Println("Error: Vertical tab character")
-		return
-	}
-	if strings.Contains(str, "\\f") {
-		fmt.Println("Error:form feed character")
-		return
-	}
-	if strings.Contains(str, "\\r") {
-		fmt.Println("Error: carriage ret character")
-		return
-	}
-	if strings.Contains(str, "\\t") {
-		str = strings.ReplaceAll(str, "\\t", "    ")
-	}
-	// Handling backspace tabs
-	str = strings.ReplaceAll(str, "\\b", "\b")
-
-	for {
-		index := strings.Index(str, "\b")
-
-		if index == -1 {
-			break
-		}
-		if index > 0 {
-			str = str[:index-1] + str[index+1:]
-		} else {
-			str = str[index+1:]
-		}
-	}
-	// Split the input string by newline characters
+	str = modifiedStr
 	str = strings.ReplaceAll(str, "\n", "\\n")
 
 	lines := strings.Split(str, "\\n")
 
+	newlineCount := 0
 	for _, line := range lines {
 		if line == "" {
+			newlineCount++
+			if newlineCount > 1 {
+				continue
+			}
 			fmt.Println()
 		} else {
-			// if len(line) != 11 {
-			// 	fmt.Println("Error: File content modified")
-			// 	return
-			// }
-
-			ascii.PrintAscii(line) // Call the PrintAscii function from the ascii package to print ASCII art
+			ascii.PrintAscii(line, bannerStyle) // Call the PrintAscii function from the ascii package to print ASCII art
 			fmt.Println()
 		}
 	}
