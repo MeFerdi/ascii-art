@@ -18,6 +18,9 @@ func main() {
 	if len(os.Args) == 3 {
 		bannerStyle = os.Args[2]
 	}
+	if str == "" {
+		return
+	}
 
 	modifiedStr, hasError := ascii.SpecialCharacters(str)
 	if hasError {

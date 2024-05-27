@@ -3,11 +3,6 @@ package ascii
 import "strings"
 
 func SpecialCharacters(str string) (string, bool) {
-	// Handle empty string
-	if str == "" {
-		return "", true
-	}
-
 	// Handle newline character
 	if str == "\\n" {
 		return "", false
