@@ -82,7 +82,7 @@ func PrintAscii(str, bannerStyle string) {
 		for _, letter := range letters {
 			if len(letter) < i {
 				fmt.Println("Error: File content modified")
-				os.Exit(0)
+				os.Exit(1)
 			}
 			fmt.Printf("%s", letter[i])
 		}
