@@ -16,7 +16,11 @@ func main() {
 	str := os.Args[1]
 	bannerStyle := "standard.txt" // Default banner style
 	if len(os.Args) == 3 {
-		bannerStyle = os.Args[2]
+		if !strings.HasSuffix(os.Args[2], ".txt") {
+			bannerStyle = os.Args[2] + ".txt"
+		} else {
+			bannerStyle = os.Args[2]
+		}
 	}
 	if str == "" {
 		return
