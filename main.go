@@ -34,17 +34,15 @@ func main() {
 
 	str = modifiedStr
 	str = strings.ReplaceAll(str, "\n", "\\n")
-
 	lines := strings.Split(str, "\\n")
 
 	newlineCount := 0
 	for _, line := range lines {
 		if line == "" {
 			newlineCount++
-			if newlineCount > 1 {
-				continue
+			if newlineCount > 0 {
+				fmt.Println()
 			}
-			fmt.Println()
 		} else {
 			ascii.PrintAscii(line, bannerStyle) // Call the PrintAscii function from the ascii package to print ASCII art
 			fmt.Println()
